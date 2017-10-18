@@ -7,7 +7,7 @@ import pickle
 import pandas as pd
 import tensorflow as tf
 from collections import deque
-from helper import getData
+from helper import get_data
 from helper import create_model
 from helper import image_to_vertor
 from helper import code_to_vertor
@@ -44,7 +44,7 @@ def main():
 
             # 训练模型
             for step in range(20000):
-                imageList, codeList = getData(100)
+                imageList, codeList = get_data(100)
                 codeList = map(lambda x: x[index], codeList)
                 x_data = map(image_to_vertor, imageList)
                 y_data = map(code_to_vertor, codeList)
