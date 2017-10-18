@@ -4,10 +4,10 @@
 from __future__ import division
 import os
 import pickle
-import tensorflow as tf
 from helper import image_to_vertor
 from define import code_length
 from define import charset
+import tensorflow as tf
 
 
 modelList = []
