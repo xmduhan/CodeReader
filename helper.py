@@ -21,7 +21,7 @@ def get_data(n=10):
     return imageList, codeList
 
 
-def image_to_vertor(image):
+def image_to_vector(image):
     """ 将图片转化为向量表示 """
     width = image.width
     height = image.height
@@ -31,7 +31,7 @@ def image_to_vertor(image):
     return image
 
 
-def code_to_vertor(code):
+def code_to_vector(code):
     """ 将验证码转化为向量表示 """
     code_length = len(code)
     labels = np.zeros([code_length, len(charset)])

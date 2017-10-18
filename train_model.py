@@ -9,8 +9,8 @@ import tensorflow as tf
 from collections import deque
 from helper import get_data
 from helper import create_model
-from helper import image_to_vertor
-from helper import code_to_vertor
+from helper import image_to_vector
+from helper import code_to_vector
 from define import code_length
 from config import max_train_time
 from config import stat_length
@@ -48,8 +48,8 @@ def main():
             for j, step in enumerate(range(max_train_time), 1):
                 imageList, codeList = get_data(100)
                 codeList = map(lambda x: x[index], codeList)
-                x_data = map(image_to_vertor, imageList)
-                y_data = map(code_to_vertor, codeList)
+                x_data = map(image_to_vector, imageList)
+                y_data = map(code_to_vector, codeList)
                 _, l, a = session.run(
                     [optimizer, loss, accuracy],
                     feed_dict={x: x_data, y: y_data, keep_prob: .75})
