@@ -52,4 +52,4 @@ def read_char(image, index):
 
 def read_code(image):
     """ """
-    return map(lambda index: read_char(image, index), range(code_length))
+    return ''.join(map(lambda index: read_char(image, index), range(code_length)))
