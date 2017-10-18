@@ -5,13 +5,13 @@ from __future__ import division
 import os
 import pickle
 import tensorflow as tf
-from helper import imageToVertor
-from define import codeLength
+from helper import image_to_vertor
+from define import code_length
 from define import charset
 
 
 modelList = []
-for index in range(codeLength):
+for index in range(code_length):
     model_path = 'model/%s/' % index
     model_file_name = os.path.join(model_path, 'model')
     nodes_file_name = os.path.join(model_path, 'nodes.pk')
@@ -43,7 +43,7 @@ def read_char(image, index):
 
     # 进行预测
     imageList = [image]
-    x_data = map(imageToVertor, imageList)
+    x_data = map(image_to_vertor, imageList)
     p = session.run(prediction, feed_dict={x: x_data, keep_prob: 1})
     result = charset[p[0][0]]
 
@@ -52,4 +52,4 @@ def read_char(image, index):
 
 def read_code(image):
     """ """
-    return map(lambda index: read_char(image, index), range(codeLength))
+    return map(lambda index: read_char(image, index), range(code_length))

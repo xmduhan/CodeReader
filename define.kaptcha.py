@@ -12,7 +12,7 @@ from random import sample
 
 width = 223
 height = 50
-codeLength = 5
+code_length = 5
 charset = digits + lowercase
 
 # 验证码图片化对象
@@ -49,12 +49,12 @@ for fontSize, fontName in product(fontSizeList, fontNameList):
     kaptchaList.append(kaptcha)
 
 
-def getCode():
+def get_code():
     """ 生成验证码 """
     return kaptcha.createText()
 
 
-def generateImage(code):
+def generate_image(code):
     """ 将验证码转化为图片 """
     kaptcha = sample(kaptchaList, 1)[0]
     image = kaptcha.createImage(code)

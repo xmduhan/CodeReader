@@ -8,7 +8,7 @@ from string import digits
 
 width = 100
 height = 60
-codeLength = 4
+code_length = 4
 # charset = digits + lowercase
 charset = digits
 
@@ -16,13 +16,13 @@ charset = digits
 captcha = ImageCaptcha(width=width, height=height)
 
 
-def generateImage(code):
+def generate_image(code):
     """ 将验证码转化为图片 """
     return captcha.generate_image(code)
 
 
-def getCode():
+def get_code():
     """ 生成验证码 """
     return ''.join(map(
         lambda x: charset[x],
-        np.random.randint(0, len(charset), codeLength)))
+        np.random.randint(0, len(charset), code_length)))

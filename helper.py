@@ -10,18 +10,18 @@ import tensorflow as tf
 from define import width
 from define import height
 from define import charset
-from define import getCode
-from define import generateImage
+from define import get_code
+from define import generate_image
 
 
-def getData(n=10):
+def get_data(n=10):
     """ 获取数据集  """
-    codeList = [getCode() for _ in range(n)]
-    imageList = map(generateImage, codeList)
+    codeList = [get_code() for _ in range(n)]
+    imageList = map(generate_image, codeList)
     return imageList, codeList
 
 
-def imageToVertor(image):
+def image_to_vertor(image):
     """ 将图片转化为向量表示 """
     width = image.width
     height = image.height
@@ -31,13 +31,13 @@ def imageToVertor(image):
     return image
 
 
-def codeToVertor(code):
+def code_to_vertor(code):
     """ 将验证码转化为向量表示 """
-    codeLength = len(code)
-    labels = np.zeros([codeLength, len(charset)])
-    for i in range(codeLength):
+    code_length = len(code)
+    labels = np.zeros([code_length, len(charset)])
+    for i in range(code_length):
         labels[i, charset.index(code[i])] = 1
-    return labels.reshape(len(charset) * codeLength)
+    return labels.reshape(len(charset) * code_length)
 
 
 def weight_variable(shape):

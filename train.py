@@ -9,16 +9,16 @@ import tensorflow as tf
 from collections import deque
 from helper import getData
 from helper import create_model
-from helper import imageToVertor
-from helper import codeToVertor
-from define import codeLength
+from helper import image_to_vertor
+from helper import code_to_vertor
+from define import code_length
 
 
 def main():
     stat_length = 30
     accuracy_level = .99
 
-    for i, index in enumerate(range(codeLength), 1):
+    for i, index in enumerate(range(code_length), 1):
         model_path = 'model/%s/' % index
         model_file_name = os.path.join(model_path, 'model')
         nodes_file_name = os.path.join(model_path, 'nodes.pk')
@@ -46,8 +46,8 @@ def main():
             for step in range(20000):
                 imageList, codeList = getData(100)
                 codeList = map(lambda x: x[index], codeList)
-                x_data = map(imageToVertor, imageList)
-                y_data = map(codeToVertor, codeList)
+                x_data = map(image_to_vertor, imageList)
+                y_data = map(code_to_vertor, codeList)
                 _, l, a = session.run(
                     [optimizer, loss, accuracy],
                     feed_dict={x: x_data, y: y_data, keep_prob: .75})
@@ -56,7 +56,7 @@ def main():
                 recent_accuracy.append(a)
                 mean_of_accuracy = pd.Series(recent_accuracy).mean()
                 format_string = '[%d(%d/%d):%d]: loss: %f, accuracy: %f, accuracy mean: %f(<%.2f?)'
-                print format_string % (index, i, codeLength, step, l, a, mean_of_accuracy, accuracy_level)
+                print format_string % (index, i, code_length, step, l, a, mean_of_accuracy, accuracy_level)
                 if len(recent_accuracy) == stat_length:
                     if mean_of_accuracy >= accuracy_level:
                         break
