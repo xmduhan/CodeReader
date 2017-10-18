@@ -15,6 +15,8 @@ from define import codeLength
 
 
 def main():
+    stat_length = 30
+    accuracy_level = .99
 
     for i, index in enumerate(range(codeLength), 1):
         model_path = 'model/%s/' % index
@@ -23,7 +25,6 @@ def main():
         if not os.path.exists(nodes_file_name):
             create_model(model_path)
 
-        stat_length = 30
         recent_accuracy = deque(maxlen=stat_length)
         graph = tf.Graph()
         config = tf.ConfigProto(intra_op_parallelism_threads=2)
@@ -54,10 +55,10 @@ def main():
                     saver.save(session, model_file_name)
                 recent_accuracy.append(a)
                 mean_of_accuracy = pd.Series(recent_accuracy).mean()
-                format_string = '[%d(%d/%d):%d]: loss: %f, accuracy: %f, accuracy mean: %f'
-                print format_string % (index, i, codeLength, step, l, a, mean_of_accuracy)
+                format_string = '[%d(%d/%d):%d]: loss: %f, accuracy: %f, accuracy mean: %f(<%.2f?)'
+                print format_string % (index, i, codeLength, step, l, a, mean_of_accuracy, accuracy_level)
                 if len(recent_accuracy) == stat_length:
-                    if mean_of_accuracy >= .99:
+                    if mean_of_accuracy >= accuracy_level:
                         break
 
 
