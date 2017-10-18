@@ -25,13 +25,20 @@ def generate_image(code):
 具体可以参考文件: define.captcha.py和define.kaptcha.py
 
 ### .生成模型
+``` shell
 ./create_model.py
+```
 
 ### .编辑配置文件(config.py)
+``` shell
+vi config.py
+```
 设置模型相关训练参数
 
 ### .训练
+``` shell
 ./train_model.py
+```
 
 ### .测试
 打开test.ipynb测试识别效果
