@@ -12,11 +12,13 @@ from helper import create_model
 from helper import image_to_vertor
 from helper import code_to_vertor
 from define import code_length
+from config import max_train_time
+from config import stat_length
+from config import accuracy_level
+from config import cpu_to_use
 
 
 def main():
-    stat_length = 30
-    accuracy_level = .99
 
     for i, index in enumerate(range(code_length), 1):
         model_path = 'model/%s/' % index
@@ -27,7 +29,7 @@ def main():
 
         recent_accuracy = deque(maxlen=stat_length)
         graph = tf.Graph()
-        config = tf.ConfigProto(intra_op_parallelism_threads=2)
+        config = tf.ConfigProto(intra_op_parallelism_threads=cpu_to_use)
         session = tf.Session(graph=graph, config=config)
         with session.graph.as_default():
 
@@ -43,7 +45,7 @@ def main():
             optimizer = session.graph.get_operation_by_name(nodes['optimizer'])
 
             # 训练模型
-            for step in range(20000):
+            for j, step in enumerate(range(max_train_time), 1):
                 imageList, codeList = get_data(100)
                 codeList = map(lambda x: x[index], codeList)
                 x_data = map(image_to_vertor, imageList)
@@ -55,8 +57,8 @@ def main():
                     saver.save(session, model_file_name)
                 recent_accuracy.append(a)
                 mean_of_accuracy = pd.Series(recent_accuracy).mean()
-                format_string = '[%d(%d/%d):%d]: loss: %f, accuracy: %f, accuracy mean: %f(<%.2f?)'
-                print format_string % (index, i, code_length, step, l, a, mean_of_accuracy, accuracy_level)
+                format_string = '[%d(%d/%d): %d/%d]: loss: %f, accuracy: %f, accuracy mean: %f(<%.2f?)'
+                print format_string % (index, i, code_length, j, max_train_time, l, a, mean_of_accuracy, accuracy_level)
                 if len(recent_accuracy) == stat_length:
                     if mean_of_accuracy >= accuracy_level:
                         break
