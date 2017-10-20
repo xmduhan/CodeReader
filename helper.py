@@ -62,7 +62,11 @@ def max_pool(x):
 
 
 def create_model(model_path, alpha=1e-3):
-    """ """
+    """
+    width
+    height
+    charset
+    """
     # 计算输入输出的长宽度
     image_size = width * height
     last_width = int(math.ceil(width / 8))

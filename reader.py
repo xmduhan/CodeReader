@@ -8,6 +8,7 @@ from helper import image_to_vector
 from define import code_length
 from define import charset
 import tensorflow as tf
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 modelList = []

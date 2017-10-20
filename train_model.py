@@ -7,6 +7,7 @@ import pickle
 import pandas as pd
 import tensorflow as tf
 from collections import deque
+from datetime import datetime
 from helper import get_data
 from helper import create_model
 from helper import image_to_vector
@@ -46,6 +47,7 @@ def main():
 
             # 训练模型
             for j, step in enumerate(range(max_train_time), 1):
+                begin_time = datetime.now()
                 imageList, codeList = get_data(100)
                 codeList = map(lambda x: x[index], codeList)
                 x_data = map(image_to_vector, imageList)
@@ -55,10 +57,12 @@ def main():
                     feed_dict={x: x_data, y: y_data, keep_prob: .75})
                 if step % 10 == 0:
                     saver.save(session, model_file_name)
+                end_time = datetime.now()
+                dt = end_time - begin_time
                 recent_accuracy.append(a)
                 mean_of_accuracy = pd.Series(recent_accuracy).mean()
-                format_string = '[%d(%d/%d): %d/%d]: loss: %f, accuracy: %f, accuracy mean: %f(<%.2f?)'
-                print format_string % (index, i, code_length, j, max_train_time, l, a, mean_of_accuracy, accuracy_level)
+                format_string = '[%d(%d/%d): %d/%d]: loss: %.2f, accuracy: %.2f, accuracy mean: %.2f(<%.2f?), time: %.2f'
+                print format_string % (index, i, code_length, j, max_train_time, l, a, mean_of_accuracy, accuracy_level, dt.total_seconds())
                 if len(recent_accuracy) == stat_length:
                     if mean_of_accuracy >= accuracy_level:
                         break
