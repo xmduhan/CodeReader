@@ -9,11 +9,14 @@ from define import code_length
 from define import charset
 import tensorflow as tf
 tf.logging.set_verbosity(tf.logging.ERROR)
+path = os.path.dirname(os.path.realpath(__file__))
+# print path
 
 
 modelList = []
 for index in range(code_length):
-    model_path = 'model/%s/' % index
+    model_path = os.path.join(path, 'model/%s/' % index)
+    # print model_path
     model_file_name = os.path.join(model_path, 'model')
     nodes_file_name = os.path.join(model_path, 'nodes.pk')
 

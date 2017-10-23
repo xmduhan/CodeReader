@@ -17,6 +17,7 @@ from config import max_train_time
 from config import stat_length
 from config import accuracy_level
 from config import cpu_to_use
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 def main():
